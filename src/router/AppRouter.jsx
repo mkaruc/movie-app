@@ -1,30 +1,50 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "../components/nav/Navbar";
-import Home from "../pages/home/Home";
-import Login from "../pages/login/Login";
-import PrivateRouter from "./PrivateRouter";
-import Detail from "../pages/detail/Details";
-import Register from "../pages/register/Register";
-import { GlobalStyles } from "../components/globalStyles/Global.style";
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import Main from '../pages/main/Main'
+import Register from '../pages/register/Register'
+import VerifyEmail from '../pages/register/VerifyEmail';
+import Login from '../pages/login/Login'
+import {useState, useEffect} from 'react'
+import {AuthProvider} from '../context/AuthContext'
+import {auth} from '../auth/firebase'
+import {onAuthStateChanged} from 'firebase/auth'
+import PrivateRoute from './PrivateRouter'
+import {Navigate} from 'react-router-dom'
 
-const AppRouter = () => {
+function AppRouter() {
+
+  const [currentUser, setCurrentUser] = useState(null)
+  const [timeActive, setTimeActive] = useState(false)
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user)
+    })
+  }, [])
+
   return (
-    <BrowserRouter>
-      <GlobalStyles />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />}>React Movie App</Route>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />}>
-        
-        </Route>
-
-        <Route path="detail" element={<PrivateRouter />}>
-          <Route path="" element={<Detail />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
+    <Router>
+      <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
+        <Routes>
+          <Route exact path='/' element={
+            <PrivateRoute>
+              <Main />
+            </PrivateRoute>
+          }/>
+          <Route path="/login" element={
+            !currentUser?.emailVerified 
+            ? <Login/>
+            : <Navigate to='/' replace/>
+          } />
+          <Route path="/register" element={
+            !currentUser?.emailVerified 
+            ? <Register/>
+            : <Navigate to='/' replace/>
+          } />
+          <Route path='/verify-email' element={<VerifyEmail/>} /> 
+        </Routes>  
+      </AuthProvider>
+  </Router>
+  );
 }
 
-export default AppRouter
+export default AppRouter;

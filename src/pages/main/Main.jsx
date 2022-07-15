@@ -1,8 +1,12 @@
-import React from 'react'
+import Navbar from '../../components/navbar/Navbar'
+import MovieCard from '../../components/moviecard/MovieCard'
 
 const Main = () => {
   return (
-    <div>Main</div>
+    <div className='mainContainer'>
+      <Navbar />
+      <MovieCard />
+    </div>
   )
 }
 
