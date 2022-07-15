@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="homeLink">
       <Main> <h1>React Movie App</h1> </Main>
       </div>
-      <div className="buttons">
+      <div className="menuLinks">
         
       </div>
     </div>
