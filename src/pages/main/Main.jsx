@@ -1,12 +1,13 @@
+import CardList from '../../components/cardList/CardList'
 import Navbar from '../../components/navbar/Navbar'
-import MovieCard from '../../components/moviecard/MovieCard'
+import MovieDetail from '../moviedetail/MovieDetail'
 
 const Main = () => {
   return (
     <div className='mainContainer'>
       <Navbar />
       
-      <MovieCard />
+      <CardList />
     </div>
   )
 }

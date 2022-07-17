@@ -37,12 +37,12 @@ function AppRouter() {
           <Route path="/login" element={
             !currentUser?.emailVerified 
             ? <Login/>
-            : <Navigate to='/main' replace/>
+            : <Navigate to='/' replace/>
           } />
           <Route path="/register" element={
             !currentUser?.emailVerified 
             ? <Register/>
-            : <Navigate to='/main' replace/>
+            : <Navigate to='/' replace/>
           } />
           <Route path='/verify-email' element={<VerifyEmail/>} /> 
         </Routes>  
