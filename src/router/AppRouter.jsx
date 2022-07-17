@@ -9,6 +9,7 @@ import {auth} from '../auth/firebase'
 import {onAuthStateChanged} from 'firebase/auth'
 import PrivateRoute from './PrivateRouter'
 import {Navigate} from 'react-router-dom'
+import MovieDetail from '../pages/moviedetail/MovieDetail';
 
 function AppRouter() {
 
@@ -25,20 +26,23 @@ function AppRouter() {
     <Router>
       <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
         <Routes>
-          <Route exact path='/' element={
+        <Route exact path='/' element={
+            <Main />
+          }/>
+          <Route exact path='/moviedetail' element={
             <PrivateRoute>
-              <Main />
+              <MovieDetail />
             </PrivateRoute>
           }/>
           <Route path="/login" element={
             !currentUser?.emailVerified 
             ? <Login/>
-            : <Navigate to='/' replace/>
+            : <Navigate to='/main' replace/>
           } />
           <Route path="/register" element={
             !currentUser?.emailVerified 
             ? <Register/>
-            : <Navigate to='/' replace/>
+            : <Navigate to='/main' replace/>
           } />
           <Route path='/verify-email' element={<VerifyEmail/>} /> 
         </Routes>  

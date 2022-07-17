@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import {getAuth,signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import {getAuth,signInWithPopup, GoogleAuthProvider, signOut} from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyD1S7QQ6C40iSFcF1uZnVuhkYvJebDqZjk",
@@ -34,5 +34,11 @@ signInWithPopup(auth, provider)
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
   });
-
+  signOut(auth)
+  .then(() => {
+    // Sign-out successful.
+  })
+  .catch((error) => {
+    // An error happened.
+  });
 export {auth}

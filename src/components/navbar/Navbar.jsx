@@ -1,16 +1,16 @@
 import React from 'react'
-import Main from '../../pages/main/Main'
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <div className='navbarContainer'>
       <div className="homeLink">
-      <Main> <h1>React Movie App</h1> </Main>
+      <Link to='/'>React Movie-App</Link>
       </div>
       <div className="menuLinks">
         <Link to='/login'>Login</Link>
-        <Link to='/Register'>Register</Link>
+        <Link to='/register'>Register</Link>
+        <Link to='/' onClick={() => sessionStorage.clear()}>Logout</Link>
       </div>
     </div>
   )
