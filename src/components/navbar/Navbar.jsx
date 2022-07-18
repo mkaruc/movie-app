@@ -1,16 +1,18 @@
-import Nav, {Div,MenuLink,HomePage, Menu} from './Navbar.style'
-
+import Nav, {Div,MenuLink,HomePage, Menu,LogoutButton} from './Navbar.style'
+import {useState} from 'react'
 
 const Navbar = () => {
+  const [isLogged, setIsLogged] = useState(false);
   return (
     <Nav justify="space-between" wrap="wrap">
       <Div>
       <HomePage to='/'>React Movie-App</HomePage>
-      <Menu>
+      <Menu onClick={()=> setIsLogged(!isLogged)}>
         <MenuLink to='/login'>Login</MenuLink>
-        <MenuLink to='/register'>Register</MenuLink>
-        {/* <MenuLink to='/' onClick={() => sessionStorage.clear()}>Logout</MenuLink> */}
-      </Menu>
+        <MenuLink to='/register'>Register</MenuLink></Menu>
+      <LogoutButton isLogged={isLogged} onClick={()=> setIsLogged(isLogged)}>
+        <MenuLink to="/logout">Logout</MenuLink>
+      </LogoutButton>
       </Div>
     </Nav>
   )

@@ -52,6 +52,16 @@ export const MenuLink = styled(Link)`
     font-weight: bold;
   }`;
 
+export const LogoutButton=styled(Flex)`
+@media (max-width: ${({ theme }) => theme.screens.lg}) {
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-height: ${({ isOpen }) => (isOpen ? '400px' : '0')};
+  overflow: hidden;
+  transition: max-height 0.3s ease-in;
+}
+`;
 
 
 export default Nav;

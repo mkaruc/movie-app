@@ -10,10 +10,11 @@ const MovieCard = ({movieList, setId}) => {
         <Card key={index} className='container' onClick={() =>
           navigate('moviedetail',{ state: item, replace: false })
         }>
-          
-          <Image src={`https://image.tmdb.org/t/p/w440_and_h660_face${item.poster_path}`} alt={item.original_title} />
           <Header>{item.original_title}</Header>
-          <Overview>{item.overview}</Overview>
+          <Image src={`https://image.tmdb.org/t/p/w440_and_h660_face${item.poster_path}`} alt={item.original_title} />
+          <Overview className='overview'>{item.overview}</Overview>
+          
+          
         </Card>
       ))}
       

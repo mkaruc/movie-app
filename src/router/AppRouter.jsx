@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRouter'
 import {Navigate} from 'react-router-dom'
 import MovieDetail from '../pages/moviedetail/MovieDetail';
 import { GlobalStyles } from '../components/globalStyles/Global.style';
+import Logout from '../pages/login/Logout';
 function AppRouter() {
 
   const [currentUser, setCurrentUser] = useState(null)
@@ -36,17 +37,10 @@ function AppRouter() {
               <MovieDetail />
             </PrivateRoute>
           }/>
-          <Route path="/login" element={
-            !currentUser?.emailVerified 
-            ? <Login/>
-            : <Navigate to='/' replace/>
-          } />
-          <Route path="/register" element={
-            !currentUser?.emailVerified 
-            ? <Register/>
-            : <Navigate to='/' replace/>
-          } />
-          <Route path='/verify-email' element={<VerifyEmail/>} /> 
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route path='/verify-email' element={<VerifyEmail/>} />
+          <Route exact path="/logout" element={<Logout />} /> 
         </Routes>  
       </AuthProvider>
   </BrowserRouter>

@@ -1,70 +1,52 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
-import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
-import {auth} from '../../auth/firebase'
-import {useNavigate} from 'react-router-dom'
-import {useAuthValue} from '../../context/AuthContext'
-import Navbar from '../../components/navbar/Navbar'
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db, logInWithEmailAndPassword, logout, registerWithEmailAndPassword, sendPasswordReset, signInWithGoogle } from "../../auth/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useState,useEffect } from "react";
 
-function Login(){
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('') 
-  const [error, setError] = useState('')
-  const {setTimeActive} = useAuthValue()
-  const navigate = useNavigate()
-
-  const login = e => {
-    e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      if(!auth.currentUser.emailVerified) {
-        sendEmailVerification(auth.currentUser)
-        .then(() => {
-          setTimeActive(true)
-          navigate('/verify-email')
-        })
-      .catch(err => alert(err.message))
-    }else{
-      navigate('/')
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
     }
-    })
-    .catch(err => setError(err.message))
-  }
-
-  return(
-    <div className='center'>
-      <Navbar />
-      <div className="sideImg">
-        <img src="https://storage.googleapis.com/afs-prod/media/e53811360eed4b8ba26b5f635d703a7c/1000.jpeg" alt="" />
-      </div>
-      <div className='auth'>
-        <h1>Log in</h1>
-        {error && <div className='auth__error'>{error}</div>}
-        <form onSubmit={login} name='login_form'>
-          <input 
-            type='email' 
-            value={email}
-            required
-            placeholder="Enter your email"
-            onChange={e => setEmail(e.target.value)}/>
-
-          <input 
-            type='password'
-            value={password}
-            required
-            placeholder='Enter your password'
-            onChange={e => setPassword(e.target.value)}/>
-
-          <button type='submit'>Login</button>
-        </form>
-        <p>
-          Don't have and account? 
-          <Link to='/register'>Create one here</Link>
-        </p>
+    if (user) navigate("/moviedetail");
+  }, [user, loading]);
+  return (
+    <div className="login">
+      <div className="login__container">
+        <input
+          type="text"
+          className="login__textBox"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-mail Address"
+        />
+        <input
+          type="password"
+          className="login__textBox"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button
+          className="login__btn"
+          onClick={() => logInWithEmailAndPassword(email, password)}
+        >
+          Login
+        </button>
+        <button className="login__btn login__google" onClick={signInWithGoogle}>
+          Login with Google
+        </button>
+        <div>
+          Don't have an account? <Link to="/register">Register</Link> now.
+        </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default Login
+export default Login;
