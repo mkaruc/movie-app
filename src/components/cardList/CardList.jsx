@@ -32,7 +32,14 @@ const searchData = () => {
       console.log(data.results);
     });
 };
-
+const detailData = () => {
+  fetch(detailUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      setMovieList(data.results);
+      console.log(data.results);
+    });
+};
 
   return (
     <div>
