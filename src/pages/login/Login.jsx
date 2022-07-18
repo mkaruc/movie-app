@@ -4,7 +4,7 @@ import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import {auth} from '../../auth/firebase'
 import {useNavigate} from 'react-router-dom'
 import {useAuthValue} from '../../context/AuthContext'
-
+import Navbar from '../../components/navbar/Navbar'
 
 function Login(){
 
@@ -34,6 +34,10 @@ function Login(){
 
   return(
     <div className='center'>
+      <Navbar />
+      <div className="sideImg">
+        <img src="https://storage.googleapis.com/afs-prod/media/e53811360eed4b8ba26b5f635d703a7c/1000.jpeg" alt="" />
+      </div>
       <div className='auth'>
         <h1>Log in</h1>
         {error && <div className='auth__error'>{error}</div>}

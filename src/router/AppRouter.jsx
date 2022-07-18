@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Main from '../pages/main/Main'
 import Register from '../pages/register/Register'
 import VerifyEmail from '../pages/register/VerifyEmail';
@@ -10,7 +10,7 @@ import {onAuthStateChanged} from 'firebase/auth'
 import PrivateRoute from './PrivateRouter'
 import {Navigate} from 'react-router-dom'
 import MovieDetail from '../pages/moviedetail/MovieDetail';
-
+import { GlobalStyles } from '../components/globalStyles/Global.style';
 function AppRouter() {
 
   const [currentUser, setCurrentUser] = useState(null)
@@ -23,7 +23,9 @@ function AppRouter() {
   }, [])
 
   return (
-    <Router>
+    
+    <BrowserRouter>
+      <GlobalStyles />
       <AuthProvider value={{currentUser, timeActive, setTimeActive}}>
         <Routes>
         <Route exact path='/' element={
@@ -47,7 +49,7 @@ function AppRouter() {
           <Route path='/verify-email' element={<VerifyEmail/>} /> 
         </Routes>  
       </AuthProvider>
-  </Router>
+  </BrowserRouter>
   );
 }
 
