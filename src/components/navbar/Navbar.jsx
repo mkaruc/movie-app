@@ -1,18 +1,28 @@
 import Nav, {Div,MenuLink,HomePage, Menu,LogoutButton} from './Navbar.style'
-import {useState} from 'react'
-
+import {useState,useContext } from 'react'
+import { AuthContext } from "../../context/AuthContext";
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <Nav justify="space-between" wrap="wrap">
       <Div>
       <HomePage to='/'>React Movie-App</HomePage>
-      <Menu onClick={()=> setIsLogged(!isLogged)}>
+      {currentUser ? ( <h5>
+        {currentUser?.displayName}
+      </h5>
+      ) : (
         <MenuLink to='/login'>Login</MenuLink>
-        <MenuLink to='/register'>Register</MenuLink></Menu>
-      <LogoutButton isLogged={isLogged} onClick={()=> setIsLogged(isLogged)}>
+        
+        )}
+        {currentUser ? (
+      <LogoutButton >
         <MenuLink to="/logout">Logout</MenuLink>
       </LogoutButton>
+      ) : (
+        <MenuLink to='/register'>Register</MenuLink>
+        )} 
       </Div>
     </Nav>
   )

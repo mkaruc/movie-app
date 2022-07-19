@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import {FormContainer,StyledInput,} from './SearchBar.style'
 const SearchBar = ({ setQuery, movieList, searchData }) => {
     const API_KEY = "b1bebfb7337b25d7a480e1641757b0ce"
     
@@ -13,10 +13,10 @@ const SearchBar = ({ setQuery, movieList, searchData }) => {
           searchData();
         };
   return (
-    <form onSubmit={handleSubmit}>
-        <input type="text" onChange={(e) => setQuery(e.target.value)}/>
-        <button type="submit">SEARCH</button>
-    </form>
+    <FormContainer onChange={handleSubmit}>
+        <StyledInput type="text" onChange={(e) => setQuery(e.target.value)} placeholder="Search a Movie.."/>
+        {/* <button type="submit">SEARCH</button> */}
+    </FormContainer>
   )
 }
 

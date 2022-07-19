@@ -1,12 +1,14 @@
 import { initializeApp } from "firebase/app";
 import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
   sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -83,6 +85,17 @@ const sendPasswordReset = async (email) => {
 };
 const logout = () => {
   signOut(auth);
+};
+export const userObserver = (setCurrentUser) => {
+  //? Kullanıcının signin olup olmadığını takip eden ve kullanıcı değiştiğinde yeni kullanıcıyı response olarak dönen firebase metodu
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+      setCurrentUser(currentUser);
+    } else {
+      // User is signed out
+      setCurrentUser(false);
+    }
+  });
 };
 export {
   auth,
